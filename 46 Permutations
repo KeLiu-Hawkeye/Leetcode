@@ -1,0 +1,38 @@
+Leetcode 46 Permutations
+
+Given a collection of distinct integers, return all possible permutations.
+
+=============================
+Solution
+We use recursion to solve this problem:
+  1) Base case: when the input array is None, it touches the base case then it returns [[]].
+  2) Recursion rule: we always split the input array into array[0] and rest arr[1:], then put arr[1:] into next recusion.
+     when we get return from the recusion, we need to insert arr[0] into different locations of returned outcome.
+     insert 1 into [2,3], there are 3 ways: [1,2,3] [2,1,3] [2,3,1]
+
+
+
+
+def permutations(arr):
+    if not arr:
+        return [[]]
+    child=permutations(arr[1:])  # we split array into array[0] and array[1:],
+                                 # then put array[1:] into next recusion.
+    result = []
+    length = len(arr) - 1
+    for ele in child:
+        if not ele:
+            result.append([arr[0]])            
+        else:
+            for i in range(0,length+1):
+                temp = ele[:]   # this copy is critical, if written as temp = ele, you will get incorrect answer
+                temp.insert(i,arr[0])  # insert arr[0] into different locations of outcome
+                result.append(temp)
+    return result
+print permutations([1,2,3])
+
+
+
+
+
+

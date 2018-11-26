@@ -1,0 +1,23 @@
+Leetcode 1 Two Sum
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+======== solution =========
+We use dictionary to record value:index. For each value in array, we check whther Targer-value is in dictionary or not:
+  if Target-value is not in dictionary, we add value:index into dictionary
+  if Target-value is in dictionary, we find the solution. Return [index[value] and index[Target-value]]
+if no solution is found, we will return.
+
+
+
+def two_sum(array, T):
+  if not array or type(T) != int:
+    return
+  visited={} # dictionary
+  for idx,value in enumerate(array):
+    if T-value not in visited:  # if Target-value is not in dictionary, add value:index into dictioanry
+      visited[value]=idx
+    else:       # if Target-value is in dictionary, we find the solution. Return the indecis of value and Target-value
+      return [idx,visited[T-value]]
+  return 
+print two_sum([2,7,11,15],9)

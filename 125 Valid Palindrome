@@ -1,0 +1,44 @@
+Leetcode 125. Valid Palindrome
+
+There are multiple ways to solve this problem. I list 2 solutions: 
+1st is straightforward and easy to understand, 
+2nd is taking advantage of reverse of array.
+
+######## Solution 1 ##########
+def valid_palindrome1(string):
+    if not string:
+        return None
+    array = []
+    lower_string = string.lower()   # change all letters to lower case
+    ord_array = range(ord('a'),ord('z')+1)   # range of lower case letters in ASCII code
+    for i in lower_string:
+        if ord(i) in ord_array:
+            array.append(i)      # if i is not a letter, discard it in array
+    left = 0
+    right =  len(array) - 1  # use 2 pointers, left moves from left to right, right goes in opposite direction
+    while left < right:
+        if array[left] != array[right]:  
+            return False   # if find any case left != right, return False
+        left += 1
+        right -= 1
+    return True
+
+print valid_palindrome1("A man, a plan, a canal: Panama")
+print valid_palindrome1("race a car")
+
+######## Solution 2 ##########
+def valid_palindrome2(string):
+    if not string:
+        return None
+    array = []
+    lower_string = string.lower()   # change all letters to lower case
+    ord_array = range(ord('a'),ord('z')+1)   # range of lower case letters in ASCII code
+    for i in lower_string:
+        if ord(i) in ord_array:
+            array.append(i)      # if i is not a letter, discard it in array
+    return array == array[::-1]
+
+print valid_palindrome2("A man, a plan, a canal: Panama")
+print valid_palindrome2("race a car")
+
+

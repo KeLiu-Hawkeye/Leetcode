@@ -1,0 +1,51 @@
+Leetcode 78 Subsets
+Given a set of ## distinct ## integers, nums, return all possible subsets (the power set).
+
+=============================
+Solution
+We use recursion to solve this problem:
+  1) Base case: when the input array is None, it touches the base case then it returns [[]].
+  2) Recursion rule: we always split the input array into array[0] and rest arr[1:], then put arr[1:] into next recusion.
+                     when we get return from the recusion, we need to do the combination with arr[0] and returned outcomes.
+      
+def subset(arr):
+    if not arr:
+        return [[]]
+    child = subset(arr[1:])  # we split array into array[0] and array[1:],
+                             # then put array[1:] into next iteration.
+    result = []
+    for ele in child:        # for each element in the returned result,
+        result.append(ele)   # either append it directly into result,
+        result.append(ele + [arr[0]])    # or combine it with array[0] then append 
+                             # the combined array into result.
+    return result
+
+print subset([1,2,3]) 
+
+==============================
+Take home message: the question is to get the subset of distinct integers, what if there are repeated integers in the input array, for example
+[1,1,2,3]. 
+We follow the same logic as we discussed previouly, BUT we need to check each subset whether it has been already in the result or not: 
+    If it is not in the result, then append; 
+   If it is in the result, then not append.
+
+Below is the solution:
+
+def subset_nodup(arr):
+  if not arr:
+    return [[]]
+  res=[]
+  first=arr[0]
+  res.append([first])
+  rest=subset_nodup(arr[1:])
+  if rest :
+    for j in rest:  # need to check j and [first] + j are in the result or not
+                    # if not, append it to result, otherwise, not append
+      if [first]+j not in res:
+        res.append([first]+j)
+      if j not in res:
+        res.append(j)
+  return res
+   
+print subset_nodup([1,1,2,3])
+
